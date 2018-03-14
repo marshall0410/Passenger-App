@@ -1,0 +1,10 @@
+.status{
+    background: green ;
+    width: 10px;
+    height: 10px;
+    display: block;
+    border-radius: 20px;
+    &.disabled{
+        background-color: red;
+    }
+}
