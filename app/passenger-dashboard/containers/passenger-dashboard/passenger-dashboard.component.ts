@@ -1,24 +1,24 @@
 import { Component, OnInit } from "@angular/core";
-import { People } from "../../models/passenger";
+import { Passenger } from "../../models/passenger";
 
 @Component({
   selector: "passenger-dashboard",
   styleUrls: ["passenger-dashboard.component.scss"],
   template: `
       <div>
-        <passenger-count [items]="People">
+        <passenger-count>
         </passenger-count>
         <passenger-details>
         </passenger-details>
         <h3>Passengers</h3>
         <ul>
-          <li *ngFor="let person of People; let i = index;">
-            <h3>{{ person.name.toUpperCase() }}</h3>                    
+          <li *ngFor="let passenger of Passengers; let i = index;">
+            <h3>{{ passenger.name.toUpperCase() }}</h3>                    
               <span>Check in Date:</span>
-              {{ person.checkedInDate ? (person.checkedInDate | date:'yMMMd') : 'not checked in' }}
+              {{ passenger.checkedInDate ? (passenger.checkedInDate | date:'yMMMd') : 'not checked in' }}
               <div>
                 Checked in Status:
-                <span [ngClass]="(person.checkedInStatus ? 'status' : 'status disabled')"></span>
+                <span [ngClass]="(passenger.checkedInStatus ? 'status' : 'status disabled')"></span>
               </div>
               <div class="children">
               <ul *ngFor="let child of children">                        
@@ -31,11 +31,11 @@ import { People } from "../../models/passenger";
     `
 })
 export class PassengerDashboardComponent implements OnInit {
-  People: People[];
+  Passengers: Passenger[];
   constructor() {}
   ngOnInit() {
     console.log("ngOnInit initialized.");
-    this.People = [
+    this.Passengers = [
       {
         id: 1,
         name: "marshall",
