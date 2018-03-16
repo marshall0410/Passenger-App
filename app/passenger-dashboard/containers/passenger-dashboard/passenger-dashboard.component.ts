@@ -6,36 +6,40 @@ import { Passenger } from "../../models/passenger";
   styleUrls: ["passenger-dashboard.component.scss"],
   template: `
       <div>
-        <passenger-count>
+        <passenger-count 
+          [items]="passengers">
         </passenger-count>
-        <passenger-details>
-        </passenger-details>
         <h3>Passengers</h3>
-        <ul>
-          <li *ngFor="let passenger of Passengers; let i = index;">
-            <h3>{{ passenger.name.toUpperCase() }}</h3>                    
-              <span>Check in Date:</span>
-              {{ passenger.checkedInDate ? (passenger.checkedInDate | date:'yMMMd') : 'not checked in' }}
-              <div>
-                Checked in Status:
-                <span [ngClass]="(passenger.checkedInStatus ? 'status' : 'status disabled')"></span>
-              </div>
-              <div class="children">
-              <ul *ngFor="let child of children">                        
-                Children: {{ child.name.length ? child.name : 0}}
-              </ul>
-            </div>
-          </li>
-        </ul>
+        <passenger-details 
+          *ngFor="let passenger of passengers"
+          [details]="passenger"
+          (edit)="editPassenger($event)"
+          (remove)="removePassenger($event)"
+        >
+        </passenger-details> 
       </div>
     `
 })
 export class PassengerDashboardComponent implements OnInit {
-  Passengers: Passenger[];
+  passengers: Passenger[];
+  editPassenger(event: Passenger) {
+    console.log("edit: " + event);
+    this.passengers = this.passengers.map((passenger: Passenger) => {
+      if (passenger.id === event.id) {
+        passenger = Object.assign({}, passenger, event);
+      }
+      return passenger;
+    });
+  }
+  removePassenger(event: Passenger) {
+    this.passengers = this.passengers.filter((passenger: Passenger) => {
+      return passenger.id !== event.id;
+    });
+  }
   constructor() {}
   ngOnInit() {
     console.log("ngOnInit initialized.");
-    this.Passengers = [
+    this.passengers = [
       {
         id: 1,
         name: "marshall",
@@ -55,7 +59,7 @@ export class PassengerDashboardComponent implements OnInit {
         children: null
       },
       {
-        id: 1,
+        id: 3,
         name: "dad",
         age: 64,
         male: true,
@@ -68,7 +72,7 @@ export class PassengerDashboardComponent implements OnInit {
         ]
       },
       {
-        id: 1,
+        id: 4,
         name: "mom",
         age: 67,
         male: false,

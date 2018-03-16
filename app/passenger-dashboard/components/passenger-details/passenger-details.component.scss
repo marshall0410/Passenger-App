@@ -1,9 +1,12 @@
-.checked-in {
-  background: green;
+.status {
   width: 10px;
   height: 10px;
-  display: block;
   border-radius: 20px;
+  float: left;
+  margin: 10px 5px 0px 0px;
+  &.checked-in {
+    background-color: green;
+  }
   &.checked-out {
     background-color: red;
   }
